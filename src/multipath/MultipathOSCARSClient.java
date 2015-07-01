@@ -84,6 +84,8 @@ public class MultipathOSCARSClient
     	}
 	}
 	
+	
+	
 	/*********************************************************************************************************************************************************
 	* Queries a specific GRI to get its path information. Then that path information is converted to a String which is returned to the calling function.
 	* The calling function can then use the path string as an OptionalConstraint for future reservations.

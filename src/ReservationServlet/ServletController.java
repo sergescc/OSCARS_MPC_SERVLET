@@ -83,6 +83,25 @@ public class ServletController
 		Collections.sort(topologyNodes);
 	}
 	
+	public ServletController(String keystorePath)
+	{
+		System.out.println("Initializing connection to OSCARS...");
+		
+		String oscarsURL = Configuration.oscarsURL;			// Where is the instance of OSCARS this client will use?
+		String topoBridgeURL = Configuration.topoBridgeURL;	// Where is the instance of TopologyBridge WS this client will use?
+		
+		// Connect to OSCARS -- enable Multipath functionality //
+		multipathClient = new MultipathOSCARSClient(oscarsURL);
+		
+		// Obtain the topology domain from Configuration.java //
+		domain = Configuration.topologyDomain;
+		
+		// Obtain the topology from the TopoBridge WS //
+		topologyNodes = getOSCARSTopology(topoBridgeURL, domain);
+		
+		Collections.sort(topologyNodes);
+	}
+	
 	/*******************************************************************************************************
 	* Returns the list of all nodes in the topology as an array of Objects (since that's what the GUI
 	* lists expect). this is just a getter, the list of nodes is precomputed only once in the constructor.
@@ -460,7 +479,7 @@ public class ServletController
     *******************************************************************************************************/
     protected void refreshMPGriLists()
     {
-    	File mpGriLookup = new File("mp_gri_lookup.txt");
+    	File mpGriLookup = new File(config.Configuration.mpGriLookupFile);
     	FileInputStream lookupStream;
 		DataInputStream lookupIn;
 		BufferedReader lookupReader;
