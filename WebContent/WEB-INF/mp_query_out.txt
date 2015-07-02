@@ -1,0 +1,4 @@
+[queryMultipathReservation]   gri= MP-2  complete.
+	SubRequest gri: es.net-4, status: RESERVED
+	SubRequest gri: es.net-5, status: RESERVED
+	SubRequest gri: es.net-6, status: RESERVED
