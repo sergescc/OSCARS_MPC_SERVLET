@@ -69,5 +69,14 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xalan-2.7.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xml-resolver-1.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/XmlSchema-1.4.5.jar"/>
+	<classpathentry kind="lib" path="/home/sergio/.m2/repository/org/springframework/spring-tx/3.2.8.RELEASE/spring-tx-3.2.8.RELEASE.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.springframework"/>
+			<attribute name="maven.artifactId" value="spring-tx"/>
+			<attribute name="maven.version" value="3.2.8.RELEASE"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

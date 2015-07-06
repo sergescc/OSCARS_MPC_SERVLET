@@ -1,4 +1,4 @@
-package ReservationServlet;
+package service;
 
 /*****************************************************************************************************************************************
 * This class is kind of awesome. Modifies the typical alphabetical sorting approach of a Collection of Strings for the GRIs.

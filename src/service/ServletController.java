@@ -1,4 +1,4 @@
-package ReservationServlet;
+package service;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -10,7 +10,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import org.ogf.schema.network.topology.ctrlplane.CtrlPlaneDomainContent;
 import org.ogf.schema.network.topology.ctrlplane.CtrlPlaneHopContent;
@@ -19,6 +21,8 @@ import org.ogf.schema.network.topology.ctrlplane.CtrlPlaneNodeContent;
 import org.ogf.schema.network.topology.ctrlplane.CtrlPlanePathContent;
 import org.ogf.schema.network.topology.ctrlplane.CtrlPlanePortContent;
 import org.ogf.schema.network.topology.ctrlplane.CtrlPlaneTopologyContent;
+
+import com.wrox.TicTacToeGame;
 
 import net.es.oscars.api.soap.gen.v06.PathInfo;
 import net.es.oscars.api.soap.gen.v06.ResDetails;
@@ -30,7 +34,6 @@ import net.es.oscars.topoBridge.soap.gen.GetTopologyRequestType;
 import net.es.oscars.topoBridge.soap.gen.GetTopologyResponseType;
 import net.es.oscars.utils.clients.TopoBridgeClient;
 import net.es.oscars.utils.soap.OSCARSServiceException;
-
 import multipath.*;
 import config.*;
 
@@ -49,7 +52,7 @@ import config.*;
 * @author Jeremy
 /*****************************************************************************************************************************************/
 public class ServletController 
-{
+{	
 	private ArrayList<String> allShortMPGris = new ArrayList<String>();	// All existing short-format MP-GRIs
 	private ArrayList<String> allLongMPGris = new ArrayList<String>();	// All existing long-format MP-GRIs
 	private ArrayList<String> allUnicastGris = new ArrayList<String>();	// All existing unicast GRIs (obtained from OSCARS)
@@ -567,6 +570,34 @@ public class ServletController
     	    	
     	return subrequestGriList.toArray();
     }
+   
+    /*******************************************************************************************************
+    * Gets all subrequest GRIs associated with the given MP-group GRI, for display on the GUI.
+    * 
+    * @param mpGRI, Group GRI to fetch the subrequest GRIs for
+    * @return The list of associated subrequest GRIs as an Array List
+    *******************************************************************************************************/
+    
+    protected ArrayList<String> getArrayOfGroupedGRIs(String mpGRI)
+    {
+    	ArrayList<String> subrequestGriList = new ArrayList<String>();
+    	GriComparator griComparator = new GriComparator();
+    	
+    	// Find long-format mpGRI in the global list //
+    	int whereToLook = allShortMPGris.indexOf(mpGRI);	
+    	String longGRI = allLongMPGris.get(whereToLook);
+    	
+    	// Break up long-format MP-GRI to get its subrequests //
+    	String[] parsedMPGri = longGRI.split(":");		
+    	    	
+    	for(int g = 2; g < parsedMPGri.length; g++)
+    		subrequestGriList.add(parsedMPGri[g]);
+    	
+    	// Sort subrequest GRIs alphabetically and by length so that es.net-2 comes after es.net-1 not es.net-199 //
+    	Collections.sort(subrequestGriList, griComparator);
+    	    	
+    	return subrequestGriList;
+    }
     
     /*******************************************************************************************************
 	* This is the behavior invoked by clicking on the "Add to Group" button on the GUI.
@@ -789,4 +820,5 @@ public class ServletController
 		
 		return consoleDisplay;
     }
+    
 }

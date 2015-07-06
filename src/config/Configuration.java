@@ -19,20 +19,20 @@ public class Configuration
 	public final static String oscarsURL = "http://localhost:9001/OSCARS";
 	public final static String topoBridgeURL = "http://localhost:9019/topoBridge";
 			
-	public final static String keystoreClient = "certs/client.jks";
+	public final static String keystoreClient = "/srv/LocalRepository/OSCARS_MPC/WebContent/WEB-INF/certs/client.jks";
 	public final static String keystoreClientUser = "mykey";
 	public final static String keystoreClientPasswd	= "changeit";
 	
-	public final static String keystoreSSL = "erts/client.jks";
+	public final static String keystoreSSL = "/srv/LocalRepository/OSCARS_MPC/WebContent/WEB-INF/certs/client.jks";
 	public final static String keystoreSSLPasswd	= "changeit";
 	
 	// Default OSCARS topology to use in GUI src/destination displays //
 	public final static String topologyDomain = "es.net";
 	
 	// There is really no reason to change these variables //
-	public final static String queryOutputFile = "mp_query_out.txt";
-	public final static String mpGriTrackerFile = "WEB-INF/mp_gri_tracker.txt";
-	public final static String mpGriLookupFile = "mp_gri_lookup.txt";
+	public final static String queryOutputFile = "/srv/LocalRepository/OSCARS_MPC/WebContent/WEB-INF/mp_query_out.txt";
+	public final static String mpGriTrackerFile = "/srv/LocalRepository/OSCARS_MPC/WebContent/WEB-INF/WEB-INF/mp_gri_tracker.txt";
+	public final static String mpGriLookupFile = "/srv/LocalRepository/OSCARS_MPC/WebContent/WEB-INF/mp_gri_lookup.txt";
 	
 	/**
 	 * Constructor - Only needs to be called in MultipathOSCARSClient.		

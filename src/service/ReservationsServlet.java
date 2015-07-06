@@ -1,4 +1,4 @@
-package ReservationServlet;
+package service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -12,23 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-
-
-
 /**
  * Servlet implementation class Reservations
  */
 @WebServlet(name = "Oscars MPC Reservation Manager",
 			urlPatterns = {"/Reservation"}
 			)
-public class Reservations extends HttpServlet {
+public class ReservationsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private ServletController mpcServletControl;
+	
     /**
      * Default constructor. 
      */
-    public Reservations() {
+    public ReservationsServlet() {
         // TODO Auto-generated constructor stub
     }
 
@@ -37,11 +34,7 @@ public class Reservations extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		
-		mpcServletControl = new ServletController(config.getServletContext().getRealPath("/WebContent/WEB-INF/certs/client.jks"));	
-		mpcServletControl.getAllUnicastGRIs();		// Invoke a request to List all unicast GRIs
-		mpcServletControl.refreshMPGriLists();
-		System.out.println("OSCARS MPC Servlet Intitialized");
-		
+
 		
 	}
 
@@ -57,38 +50,7 @@ public class Reservations extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Gson JSONWriter = new Gson();
 		
-		String action = request.getParameter("action");
-		String selectedMPGRI = request.getParameter("MPGRI");
-		
-		switch (action)
-		{
-		case("listMPGris"):
-		{
-			setResponsetoJson(response);			
-			String listMPGRIs = JSONWriter.toJson(mpcServletControl.getMPGRIs());
-			response.getWriter().println(listMPGRIs);
-			
-			break;
-		}
-		case("listUniGRIs"):
-		{
-			setResponsetoJson(response);
-			String listUniGRIs = JSONWriter.toJson(mpcServletControl.getAllUnicastGRIs());
-			response.getWriter().println(listUniGRIs);
-		}
-		case("listForMPGRI"):
-		{
-			setResponsetoJson(response);
-			String listUniGRIs = JSONWriter.toJson(mpcServletControl.getGroupedGRIs(selectedMPGRI));
-			response.getWriter().println(listUniGRIs);
-			break;
-		}
-		default:
-			
-			break;
-		}
 		
 	}
 
