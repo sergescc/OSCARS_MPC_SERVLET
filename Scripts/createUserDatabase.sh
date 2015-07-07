@@ -26,65 +26,81 @@ echo -en "$MENU_POS$THIN_AQUA What would you like to do: $RESET_COLOR"
 echo -en "$SUB_TAB$THIN_BLUE 1.Create Databases $RESET_COLOR"
 echo -en "$ADD_SUB_TAB$THIN_BLUE 2.Clear Databases $RESET_COLOR"
 echo -en "$ADD_SUB_TAB$THIN_BLUE 3.Delete Databases $RESET_COLOR"
-echo -en "$PROMPT_POSITION$THIN_BURGUNDY Command: $RESET_COLOR"
-read COMMAND
-if [ "$COMMAND" = "1" ]; then
+echo -en "$ADD_SUB_TAB$THIN_BLUE 4.Exit $RESET_COLOR"
 
-	SQLRoot=root
 
-	echo -en "$OKSTATUS Creating Database"
-	if [ ! -z `which mysql` ]; then
-	    	SQL=mysql
-	elif [ ! -z `which mysql5` ]; then
-    		SQL=mysql5
-	else
-    		echo mysql not found on path
-    		echo "Please refer to GETTINGSTARTED Document"
+while true 
+do
+	echo -en "$PROMPT_POSITION$THIN_BURGUNDY Command: $RESET_COLOR"
+	read COMMAND
+
+	if [ "$COMMAND" = "1" ]; then
+
+		SQLRoot=root
+
+		echo -en "$OKSTATUS Creating Database"
+		if [ ! -z `which mysql` ]; then
+	    		SQL=mysql
+		elif [ ! -z `which mysql5` ]; then
+    			SQL=mysql5
+		else
+    			echo mysql not found on path
+    			echo "Please refer to GETTINGSTARTED Document"
     		exit -1
-	fi
 
-	sleep 1
-	echo -en "$OKSTATUS Using $SQL"
-	sleep 1
-	echo -en "$OKSTATUS Please Enter Mysql root password"
-	echo -en "$PROMPT_POSITION$THIN_BURGUNDY Password: $RESET_COLOR"
-	read -s SQLpass
+		fi
+		sleep 1
+		echo -en "$OKSTATUS Using $SQL"
+		sleep 1
+		echo -en "$OKSTATUS Please Enter Mysql root password"
+		echo -en "$PROMPT_POSITION$THIN_BURGUNDY Password: $RESET_COLOR"
+		read -s SQLpass
 
-	if [ -z $SQLpass ]; then
-		echo -en "$STATUS_LINE$ERROR WARNING: \033[s$RESET_COLOR Mysql root password is empty. \033[u\033[1B It is not secure to leave the password empty"
-	fi
-	
-	$SQL -u $SQLRoot -p$SQLpass < 
+		if [ -z $SQLpass ]; then
+			echo -en "$STATUS_LINE$ERROR WARNING: \033[s$RESET_COLOR Mysql root password is empty. \033[u\033[1B It is not secure to leave the password empty"
+		fi
 
-elif [ "COMMAND" = "2" ]; then
+		echo -en "\033[20;5H"
 
-	echo -en "$STATUS_LINE$OK STATUS: $RESET_COLOR Clearing Database"
-                if [ ! -z `which mysql` ]; then
-                SQL=mysql
-        elif [ ! -z `which mysql5` ]; then
-                SQL=mysql5
-        else
-                echo mysql not found on path
-                echo "NO mySql Found Maybe It's all gone already"
-        exit -1
-        fi
+		$SQL -u $SQLRoot -p$SQLpass < $MPC_DIST/sql/createUserDatabase.sql
 
-elif [ "$COMMAND" = "3" ]; then
+		sleep 10
 
-	echo -en "$STATUS_LINE$OK STATUS: $RESET_COLOR Deleting Database"
+	elif [ "COMMAND" = "2" ]; then
+
+		echo -en "$STATUS_LINE$OK STATUS: $RESET_COLOR Clearing Database"
+               	if [ ! -z `which mysql` ]; then
+               		SQL=mysql
+       		elif [ ! -z `which mysql5` ]; then
+               		SQL=mysql5
+       		else
+                	echo mysql not found on path
+                	echo "NO mySql Found Maybe It's all gone already"
+     		   	exit -1
+        	fi
+
+	elif [ "$COMMAND" = "3" ]; then
+
+		echo -en "$STATUS_LINE$OK STATUS: $RESET_COLOR Deleting Database"
 	        if [ ! -z `which mysql` ]; then
-                SQL=mysql
-        elif [ ! -z `which mysql5` ]; then
-                SQL=mysql5
-        else
-                echo mysql not found on path
-                echo "NO mySql Found Maybe It's all gone already"
-        exit -1
-        fi
+	                SQL=mysql
+	        elif [ ! -z `which mysql5` ]; then
+	                SQL=mysql5
+       		else
+                	echo mysql not found on path
+                	echo "NO mySql Found Maybe It's all gone already"
+        		exit -1
+        	fi
 
-else
-	echo -en "$STATUS_LINE$ERROR ERROR: $RESET_COLOR Invalid Command"
-fi
+	elif [ "$COMMAND" = "4" ]; then
+		break
+
+	else
+		echo -en "$STATUS_LINE$ERROR ERROR: $RESET_COLOR Invalid Command"
+	fi
+
+
+done 
 
 echo -en "$END_LINE"
 

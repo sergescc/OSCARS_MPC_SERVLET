@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+echo -en "\033[36m Welcome to MPC Database Management\n "
+echo -en "	What would you like to do:\n"
+echo -en "		\033[1;33m 1.Create Databases\n \033[m"
+echo -en "		\033[1;33m 2.Delete Databases\n \033[m"
