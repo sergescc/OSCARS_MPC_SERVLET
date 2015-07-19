@@ -1,7 +1,13 @@
 package service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -10,18 +16,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
+
+import data.models.UserInfo;
 /**
  * Servlet implementation class Reservations
  */
 @WebServlet(name = "Oscars MPC Reservation Manager",
-			urlPatterns = {"/Reservation"}
+			urlPatterns = {"/Reservation"},
+			loadOnStartup = 1
 			)
 public class ReservationsServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 
-	
     /**
      * Default constructor. 
      */
@@ -32,9 +42,9 @@ public class ReservationsServlet extends HttpServlet {
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
-	public void init(ServletConfig config) throws ServletException {
+	public void init() throws ServletException {
 		
-
+	
 		
 	}
 
@@ -46,11 +56,13 @@ public class ReservationsServlet extends HttpServlet {
 	}
 
 	/**
+	 * @throws IOException 
+	 * @throws ServletException 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+
 		
 	}
 
@@ -58,14 +70,39 @@ public class ReservationsServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		String action = request.getParameter("action");
+		
+		
+		if (action.equals("login")) {
+
+			StringBuffer bufferedString = new StringBuffer();
+			Gson JSONReader = new Gson();
+			try 
+			{
+				BufferedReader reader = request.getReader();
+				String line = null;
+				while ((line = reader.readLine()) !=  null )
+				{
+					bufferedString.append(line);
+				}
+			} 
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+			String rawMessage = bufferedString.toString();
+			UserInfo currentUser = JSONReader.fromJson(rawMessage, UserInfo.class);
+			
+			 response.setContentType("text/html");
+			 PrintWriter out = response.getWriter();
+			    out.write("A new user " + currentUser.getUsername() + " has been created.");
+			    out.flush();
+			    out.close();
+			
+		}
 	}
 	
-	private void setResponsetoJson (HttpServletResponse response) throws UnsupportedEncodingException
-	{
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-	}
 
 }
 

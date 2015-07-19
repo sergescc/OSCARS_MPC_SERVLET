@@ -21,7 +21,7 @@ import datastructs.MPReservation;
 
 
 
-@ServerEndpoint("/reservations/networkstate/{username}/")
+@ServerEndpoint("/Reservations/{username}")
 public class MultiPathReservationsServer {
 
 	private ServletController mpcServletControl = new ServletController();
@@ -52,7 +52,7 @@ public class MultiPathReservationsServer {
 		for (String currentAction : action) {
 			switch (currentAction) {
 			case ("listMPGris"): {
-				String listMPGRIs = JSONWriter.toJson(mpcServletControl
+				sendJsonMessage(session,username, mpcServletControl
 						.getMPGRIs());
 
 				break;
@@ -95,12 +95,12 @@ public class MultiPathReservationsServer {
 	}
 	
 	
-	private void sendJsonMessage(Session session,  String username, DataMessage message)
+	private void sendJsonMessage(Session session,  String username, Object[] objects)
     {
         try
         {
             session.getBasicRemote()
-                   .sendText(MultiPathReservationsServer.mapper.writeValueAsString(message));
+                   .sendText(MultiPathReservationsServer.mapper.writeValueAsString(objects));
         }
         catch(IOException e)
         {
