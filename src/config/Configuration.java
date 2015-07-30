@@ -33,7 +33,9 @@ public class Configuration
 	public final static String queryOutputFile = "/srv/LocalRepository/OSCARS_MPC/WebContent/WEB-INF/mp_query_out.txt";
 	public final static String mpGriTrackerFile = "/srv/LocalRepository/OSCARS_MPC/WebContent/WEB-INF/WEB-INF/mp_gri_tracker.txt";
 	public final static String mpGriLookupFile = "/srv/LocalRepository/OSCARS_MPC/WebContent/WEB-INF/mp_gri_lookup.txt";
-	
+	public final static String mysqlLocation = "jdbc:mysql://localhost:3306";
+	public final static String mysqlUser = "mpcAdmin";
+	public final static String mysqlPassword ="mpcAdminPASS";
 	/**
 	 * Constructor - Only needs to be called in MultipathOSCARSClient.		
 	 */
